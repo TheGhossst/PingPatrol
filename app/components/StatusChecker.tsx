@@ -109,7 +109,7 @@ export function StatusChecker() {
                                     <div className="flex items-center justify-between mb-4">
                                         <h3 className="text-lg font-semibold">Status Results</h3>
                                         <span className="text-sm text-gray-500">
-                                            {new Date(result.timestamp).toLocaleTimeString()}
+                                            {result.timestamp ? new Date(result.timestamp).toLocaleTimeString() : ''}
                                         </span>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

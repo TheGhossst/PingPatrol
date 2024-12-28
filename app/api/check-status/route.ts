@@ -12,14 +12,16 @@ export async function POST(request: Request) {
     return NextResponse.json({
       status: response.ok ? 'Up' : 'Down',
       statusCode: response.status,
-      responseTime: responseTime
+      responseTime: responseTime,
+      timestamp: new Date().toISOString()
     })
   } catch (error) {
     console.error(error)
     return NextResponse.json({
       status: 'Down',
       statusCode: 0,
-      responseTime: 0
+      responseTime: 0,
+      timestamp: new Date().toISOString()
     })
   }
 }
