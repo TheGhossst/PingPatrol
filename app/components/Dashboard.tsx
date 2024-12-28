@@ -11,9 +11,10 @@ export function Dashboard() {
   //const overallUptime = websites.reduce((acc, site) => acc + site.uptime, 0) / totalSites || 0
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div className="content-evenly grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <DashboardCard title="Total Sites" value={totalSites} />
       <DashboardCard title="Sites Up" value={upSites} />
+      <DashboardCard title="Sites Down" value={totalSites - upSites} />
       <DashboardCard title="Avg Response Time" value={`${averageResponseTime.toFixed(2)}ms`} />
     </div>
   )
