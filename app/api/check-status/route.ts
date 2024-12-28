@@ -15,6 +15,7 @@ export async function POST(request: Request) {
       responseTime: responseTime
     })
   } catch (error) {
+    console.error(error)
     return NextResponse.json({
       status: 'Down',
       statusCode: 0,

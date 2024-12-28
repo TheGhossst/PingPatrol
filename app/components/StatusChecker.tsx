@@ -47,7 +47,7 @@ export function StatusChecker() {
                     variant: "destructive",
                 })
             }
-        } catch (error) {
+        } catch {
             toast({
                 title: "Error",
                 description: "Failed to check website status.",

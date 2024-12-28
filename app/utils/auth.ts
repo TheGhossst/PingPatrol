@@ -1,5 +1,6 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut as firebaseSignOut, signInWithPopup } from 'firebase/auth'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut as firebaseSignOut, signInWithPopup, AuthError } from 'firebase/auth'
 import { auth, googleProvider } from '../../api/firebase'
+
 
 export const signIn = async (email: string, password: string) => {
   try {
@@ -28,7 +29,7 @@ export const signOut = async () => {
   }
 }
 
-export const signInWithGoogle = async () => {
+/*export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider)
     return result.user
@@ -44,5 +45,38 @@ export const signInWithGoogle = async () => {
         throw error;
     }
   }
+}*/
+
+export const signInWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    return result.user;
+  } catch (error: unknown) {
+    if (isFirebaseAuthError(error)) {
+      switch (error.code) {
+        case 'auth/popup-closed-by-user':
+        case 'auth/cancelled-popup-request':
+          // Silently handle user cancellation
+          return null;
+        default:
+          // Rethrow other errors
+          throw error;
+      }
+    } else {
+      // Handle unexpected error types
+      console.error('Unexpected error during Google sign-in:', error);
+      throw error;
+    }
+  }
+};
+
+// Helper function to check if an error is a Firebase AuthError
+function isFirebaseAuthError(error: unknown): error is AuthError {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    typeof (error as { code: unknown }).code === 'string'
+  );
 }
 

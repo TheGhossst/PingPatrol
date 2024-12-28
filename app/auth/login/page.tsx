@@ -57,57 +57,69 @@ export default function LoginPage() {
   }
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const user = await signInWithGoogle()
+      const user = await signInWithGoogle();
       if (!user) {
-        console.log('Sign-in cancelled by user')
+        console.log('Sign-in cancelled by user');
         toast({
           title: "Sign-in cancelled",
           description: "You closed the Google sign-in window.",
           variant: "default",
-        })
+        });
         return;
       }
 
       toast({
         title: "Welcome!",
         description: "You've successfully signed in with Google.",
-      })
-      router.push('/')
-    } catch (error: any) {
-      switch (error.code) {
-        case 'auth/popup-blocked':
-          console.warn('Popup was blocked by the browser:', error)
-          toast({
-            title: "Popup Blocked",
-            description: "Please allow popups for this website and try again.",
-            variant: "destructive",
-          })
-          break;
+      });
+      router.push('/');
+    } catch (error: unknown) {
+      if (error instanceof Error && 'code' in error) {
+        const errCode = (error as { code: string }).code;
 
-        case 'auth/network-request-failed':
-          console.error('Network error occurred:', error)
-          toast({
-            title: "Network Error",
-            description: "Please check your internet connection and try again.",
-            variant: "destructive",
-          })
-          break;
+        switch (errCode) {
+          case 'auth/popup-blocked':
+            console.warn('Popup was blocked by the browser:', error);
+            toast({
+              title: "Popup Blocked",
+              description: "Please allow popups for this website and try again.",
+              variant: "destructive",
+            });
+            break;
 
-        default:
-          console.error('Error signing in with Google:', error)
-          toast({
-            title: "Error",
-            description: "Could not sign in with Google. Please try again.",
-            variant: "destructive",
-          })
-          break;
+          case 'auth/network-request-failed':
+            console.error('Network error occurred:', error);
+            toast({
+              title: "Network Error",
+              description: "Please check your internet connection and try again.",
+              variant: "destructive",
+            });
+            break;
+
+          default:
+            console.error('Error signing in with Google:', error);
+            toast({
+              title: "Error",
+              description: "Could not sign in with Google. Please try again.",
+              variant: "destructive",
+            });
+            break;
+        }
+      } else {
+        console.error('Unknown error signing in with Google:', error);
+        toast({
+          title: "Error",
+          description: "An unknown error occurred. Please try again.",
+          variant: "destructive",
+        });
       }
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
@@ -231,7 +243,7 @@ export default function LoginPage() {
         </Card>
 
         <p className="text-center text-sm text-gray-600">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link
             href="/auth/signup"
             className={cn(
