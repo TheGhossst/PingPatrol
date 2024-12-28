@@ -45,14 +45,6 @@ export function WebsiteStats({ website, onClose }: WebsiteStatsProps) {
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Uptime</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>{website.uptime?.toFixed(2) ?? '0.00'}%</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
               <CardTitle>Last Downtime</CardTitle>
             </CardHeader>
             <CardContent>

@@ -12,7 +12,7 @@ export default function Home() {
 
   const handleGetStarted = () => {
     if (user) {
-      document.getElementById('status-checker')?.scrollIntoView({ 
+      document.getElementById('auth-section')?.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       })
@@ -45,15 +45,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="status-checker" className="py-12 bg-gray-50">
-        <StatusChecker />
-      </section>
-
-      <section className="container mx-auto px-4 py-12">
-        <Dashboard />
-        <AddWebsiteForm />
-        <WebsiteList />
-      </section>
+      {!user ? (
+        <section id="status-checker" className="py-12 bg-gray-50">
+          <StatusChecker />
+        </section>) : (
+        <section id="auth-section" className="container mx-auto px-4 py-12">
+          <Dashboard />
+          <AddWebsiteForm />
+          <WebsiteList />
+        </section>)
+      }
     </main>
   )
 }
