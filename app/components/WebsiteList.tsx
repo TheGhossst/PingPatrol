@@ -68,7 +68,6 @@ export function WebsiteList() {
               <TableHead>URL</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Response Time</TableHead>
-              <TableHead>Uptime</TableHead>
               <TableHead>Last Downtime</TableHead>
               <TableHead>Last Checked</TableHead>
               <TableHead>Actions</TableHead>
@@ -84,7 +83,6 @@ export function WebsiteList() {
                   </Badge>
                 </TableCell>
                 <TableCell>{website.responseTime}ms</TableCell>
-                <TableCell>{website.uptime?.toFixed(2) ?? '0.00'}%</TableCell>
                 <TableCell>
                   {website.lastDowntime && typeof website.lastDowntime.toDate === 'function'
                     ? website.lastDowntime.toDate().toLocaleString()
