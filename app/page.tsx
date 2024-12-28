@@ -17,10 +17,10 @@ export default function Home() {
           <p className="text-2xl font-light mb-10 opacity-90">
             Monitor your websites with ease and precision.
           </p>
-          <Link href="/auth/signup" passHref>
+          <Link href="/auth/login" passHref>
             <Button
               size="lg"
-              className="bg-white text-purple-600 hover:bg-gray-100 px-8 py-4 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className="bg-white text-purple-600 hover:bg-gray-100 px-8 py-4 shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
               Get Started
             </Button>
