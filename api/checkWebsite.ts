@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from '../app/utils/firebase'
+import { db } from './firebase'
 import { doc, updateDoc } from 'firebase/firestore'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

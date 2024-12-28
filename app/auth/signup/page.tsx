@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { auth, googleProvider } from '../../utils/firebase';
+import { auth, googleProvider } from '../../../api/firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { Eye, EyeOff } from 'lucide-react';
 

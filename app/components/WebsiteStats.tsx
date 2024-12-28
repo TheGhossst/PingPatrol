@@ -18,37 +18,42 @@ export function WebsiteStats({ website, onClose }: WebsiteStatsProps) {
       responseTime: rt.value
     })) || []
 
+  const getStatusDisplay = () => {
+    if (!website.statusCode) return website.status;
+    return `${website.status} (${website.statusCode})`;
+  }
+
   return (
     <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl">
-        <DialogHeader>
+        <DialogHeader className="pb-2">
           <DialogTitle>{website.url} - Detailed Statistics</DialogTitle>
         </DialogHeader>
-        <div className="grid grid-cols-2 gap-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Current Status</CardTitle>
+        <div className="grid grid-cols-3 gap-4">
+          <Card className="shadow-sm">
+            <CardHeader className="py-3">
+              <CardTitle className="text-sm font-medium">Current Status</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className={website.status === 'Up' ? 'text-green-600' : 'text-red-600'}>
-                {website.status}
+            <CardContent className="py-2">
+              <p className={`text-lg font-semibold ${website.status === 'Up' ? 'text-green-600' : 'text-red-600'}`}>
+                {getStatusDisplay()}
               </p>
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Current Response Time</CardTitle>
+          <Card className="shadow-sm">
+            <CardHeader className="py-3">
+              <CardTitle className="text-sm font-medium">Response Time</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p>{website.responseTime}ms</p>
+            <CardContent className="py-2">
+              <p className="text-lg font-semibold">{website.responseTime}ms</p>
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Last Downtime</CardTitle>
+          <Card className="shadow-sm">
+            <CardHeader className="py-3">
+              <CardTitle className="text-sm font-medium">Last Downtime</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p>
+            <CardContent className="py-2">
+              <p className="text-lg font-semibold">
                 {website.lastDowntime && typeof website.lastDowntime.toDate === 'function'
                   ? website.lastDowntime.toDate().toLocaleString()
                   : 'N/A'}
@@ -56,18 +61,31 @@ export function WebsiteStats({ website, onClose }: WebsiteStatsProps) {
             </CardContent>
           </Card>
         </div>
-        <Card className="mt-4">
-          <CardHeader>
-            <CardTitle>Response Time History</CardTitle>
+        <Card className="mt-4 shadow-sm">
+          <CardHeader className="py-3">
+            <CardTitle className="text-sm font-medium">Response Time History</CardTitle>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="py-2">
+            <ResponsiveContainer width="100%" height={200}>
               <LineChart data={chartData}>
-                <XAxis dataKey="time" />
-                <YAxis />
+                <XAxis
+                  dataKey="time"
+                  tick={{ fontSize: 12 }}
+                  interval="preserveStartEnd"
+                />
+                <YAxis
+                  tick={{ fontSize: 12 }}
+                  width={40}
+                />
                 <Tooltip />
                 <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-                <Line type="monotone" dataKey="responseTime" stroke="#8884d8" />
+                <Line
+                  type="monotone"
+                  dataKey="responseTime"
+                  stroke="#8884d8"
+                  strokeWidth={2}
+                  dot={false}
+                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>

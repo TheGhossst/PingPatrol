@@ -112,9 +112,9 @@ export function WebsiteList() {
           </TableBody>
         </Table>
         {selectedWebsite && (
-          <WebsiteStats 
-            website={websites.find(w => w.id === selectedWebsite)!} 
-            onClose={() => setSelectedWebsite(null)} 
+          <WebsiteStats
+            website={websites.find(w => w.id === selectedWebsite)!}
+            onClose={() => setSelectedWebsite(null)}
           />
         )}
       </CardContent>

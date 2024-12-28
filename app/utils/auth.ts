@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut as firebaseSignOut, signInWithPopup } from 'firebase/auth'
-import { auth, googleProvider } from './firebase'
+import { auth, googleProvider } from '../../api/firebase'
 
 export const signIn = async (email: string, password: string) => {
   try {

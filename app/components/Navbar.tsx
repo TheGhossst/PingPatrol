@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useAuth } from '../context/AuthContext'
 import { Button } from '@/components/ui/button'
-import { signOut } from '../utils/firebase'
+import { signOut } from '../../api/firebase'
 import { toast } from '@/hooks/use-toast'
 
 export function Navbar() {

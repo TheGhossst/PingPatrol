@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { collection, query, where, onSnapshot, addDoc, Timestamp, updateDoc, doc, deleteDoc } from 'firebase/firestore'
-import { db } from '../utils/firebase'
+import { db } from '../../api/firebase'
 import { useAuth } from '../context/AuthContext'
 
 export interface Website {
   id: string
   url: string
   status: 'Up' | 'Down'
+  statusCode?: number
   responseTime: number
   uptime: number
   lastChecked: Timestamp
@@ -37,7 +38,6 @@ export function useWebsites() {
     if (!user) throw new Error("User not authenticated")
 
     try {
-      // First check the website status
       const response = await fetch('/api/check-status', {
         method: 'POST',
         headers: {
@@ -47,16 +47,16 @@ export function useWebsites() {
       });
       const statusData = await response.json();
 
-      // Then add the document with the actual status data
       await addDoc(collection(db, 'websites'), {
         userId: user.uid,
         url,
         status: statusData.status,
+        statusCode: statusData.statusCode,
         responseTime: statusData.responseTime,
         uptime: 100,
         lastChecked: Timestamp.now(),
         lastDowntime: statusData.status === 'Down' ? Timestamp.now() : null,
-        responseTimes: [statusData.responseTime], // Initialize with first response time
+        responseTimes: [statusData.responseTime],
       })
     } catch (error) {
       console.error('Error adding website:', error)
@@ -104,13 +104,14 @@ export function useWebsites() {
 
       await updateDoc(doc(db, 'websites', websiteId), {
         status: statusData.status,
+        statusCode: statusData.statusCode,
         responseTime: statusData.responseTime,
         lastChecked: Timestamp.now(),
         lastDowntime: statusData.status === 'Down' ? Timestamp.now() : website.lastDowntime,
-        responseTimes: [...website.responseTimes, { 
-          time: Timestamp.now(), 
-          value: statusData.responseTime 
-        }].slice(-50)  // Keep last 50 measurements
+        responseTimes: [...website.responseTimes, {
+          time: Timestamp.now(),
+          value: statusData.responseTime
+        }].slice(-50)
       })
     } catch (error) {
       console.error('Error refreshing website:', error)
