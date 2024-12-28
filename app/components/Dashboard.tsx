@@ -15,7 +15,6 @@ export function Dashboard() {
       <DashboardCard title="Total Sites" value={totalSites} />
       <DashboardCard title="Sites Up" value={upSites} />
       <DashboardCard title="Avg Response Time" value={`${averageResponseTime.toFixed(2)}ms`} />
-      <DashboardCard title="Overall Uptime" value={`${overallUptime.toFixed(2)}%`} />
     </div>
   )
 }
