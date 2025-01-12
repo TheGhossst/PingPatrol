@@ -31,12 +31,6 @@ PingPatrol is a cutting-edge website monitoring application designed to help you
   - Check any website's status without authentication
   - Instant response time results
   - User-friendly interface
-
-- **Notification System**
-  - Email alerts for downtime incidents
-  - Customizable notification preferences
-  - Detailed incident reporting
-
 ---
 
 ## Technology Stack
